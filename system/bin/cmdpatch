@@ -9,6 +9,7 @@ err() {
 }
 
 [[ ! -f "$MAGISKBOOT" ]] && err "Failed to find magiskboot binary. Exiting."
+[[ -z "$@" ]] && err "No arguments provided. Exiting."
 
 SLOT=`getprop ro.boot.slot_suffix`
 BOOT="boot$SLOT"
