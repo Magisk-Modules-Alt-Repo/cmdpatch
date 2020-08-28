@@ -1,0 +1,6 @@
+id=cmdpatch
+name=CMD Patch
+version=v1.0
+versionCode=1
+author=tytydraco
+description=An Android Linux Kernel command line patch tool using Magisk's magiskboot binary.
