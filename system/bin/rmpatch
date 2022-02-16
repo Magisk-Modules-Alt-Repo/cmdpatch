@@ -15,19 +15,19 @@ SLOT=$(getprop ro.boot.slot_suffix)
 BOOT="boot$SLOT"
 BOOTIMG="/dev/block/by-name/$BOOT"
 
-mkdir -p /data/local/tmp/cmdpatch
-cd /data/local/tmp/cmdpatch
+mkdir -p /data/local/tmp/rmpatch
+cd /data/local/tmp/rmpatch
 
 dd if="$BOOTIMG" of="/sdcard/$BOOT.img.bk"
 $MAGISKBOOT unpack -h "$BOOTIMG"
 
-for tweak in $@
+for remove in $@
 do
-	echo "=== $tweak ==="
+	echo "=== $remove ==="
 	local cmdline=$(cat header | grep cmdline=)
-	[[ "$tweak" != *"$cmdline"* ]] && sed -i "s/cmdline=/cmdline=$tweak /" header
+	[[ "$remove" != *"$cmdline"* ]] && sed -i "s/$remove//" header
 done
 
 $MAGISKBOOT repack "$BOOTIMG" new.img
 dd if=new.img of="$BOOTIMG"
-rm -rf /data/local/tmp/cmdpatch
+rm -rf /data/local/tmp/rmpatch
